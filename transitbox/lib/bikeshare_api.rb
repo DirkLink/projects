@@ -15,8 +15,9 @@ class BikeShareAPI
     s = BikeShareAPI.get("")
     if s
       station_array = s["stations"]["station"].map {|station| station.values_at("name","lat","long","nbEmptyDocks","nbBikes")}
-      station_array.map {|station| Hash[:name,station[0],:lat,station[1],:long,station[2],:nbEmptyDocks,station[3],:nbBikes,station[4]]}
+      station_array = station_array.map {|station| Hash[:name,station[0],:lat,station[1],:long,station[2],:nbEmptyDocks,station[3],:nbBikes,station[4]]}
     end
+    station_array
   end
 end
 

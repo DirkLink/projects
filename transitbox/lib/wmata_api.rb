@@ -2,7 +2,7 @@ require 'httparty'
 require 'json'
 
 class WMataAPI
-  Token = File.read "./token"
+  Token = File.read "./token.txt"
 
   include HTTParty
   base_uri 'https://api.wmata.com'
@@ -11,28 +11,22 @@ class WMataAPI
     #@headers = { "Authorization" => "token #{Token}"}
   end
 
-  def stations
-    s = WMataAPI.get("https://api.wmata.com/Rail.svc/json/jStations", query: { api_key: "#{Token}" })
-    if s
-
-      station_array = s["stations"]["station"].map {|station| station.values_at("name","lat","long","nbEmptyDocks","nbBikes")}
-      station_array.map {|station| Hash[:name,station[0],:lat,station[1],:long,station[2],:nbEmptyDocks,station[3],:nbBikes,station[4]]}
-    end
+  def bus_stops
+    s = WMataAPI.get("https://api.wmata.com/Bus.svc/json/jStops", query: { api_key: "#{Token}" })
   end
 
-  def get_track artist, track
+  def train_stations
+    s = WMataAPI.get("https://api.wmata.com/Rail.svc/json/jStations", query: { api_key: "#{Token}" })
+    # if s
 
-    s = WMataAPI.get("/v1/search", query: { q: "artist:#{artist} + track:#{track}", type: "track"}) 
-    # query: { q: "uprising", type: "track"}
-    if s
-      track_list = s["tracks"]["items"].map { |track| track.values_at("name", "uri") }
-      track_list.first
-    end
+    #   station_array = s["stations"]["station"].map {|station| station.values_at("name","lat","long","nbEmptyDocks","nbBikes")}
+    #   station_array.map {|station| Hash[:name,station[0],:lat,station[1],:long,station[2],:nbEmptyDocks,station[3],:nbBikes,station[4]]}
+    # end
   end
 end
 
-# require 'pry'
-# t = WMataAPI.new
-# binding.pry
+require 'pry'
+t = WMataAPI.new
+binding.pry
 
 
