@@ -1,5 +1,6 @@
 .DS_Store
 coverage
 db/*.sqlite3
+token.txt
 
 session_secret.txt
