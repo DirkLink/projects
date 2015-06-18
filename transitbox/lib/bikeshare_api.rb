@@ -14,7 +14,7 @@ class BikeShareAPI
     s = BikeShareAPI.get("")
     station_array = s["stations"]["station"].map {|station| station.values_at("name","lat","long","id")}
     station_array.each do |station|
-      BikeStation.create! address: station[0], station_id: station[1], lat: station[2], long: station[3]
+    BikeStation.create! address: station[0], station_id: station[1], lat: station[2], long: station[3]
     end
   end
 

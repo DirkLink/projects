@@ -12,6 +12,10 @@ class TransitApp < Sinatra::Base
 
   # set :session_secret, (ENV["SESSION_SECRET"] || "development")
 
+  get "/transit" do
+    params[:loc]
+  end
+
   use Rack::Cors do
     allow do
       origins '*'
