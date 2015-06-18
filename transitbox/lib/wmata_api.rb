@@ -11,17 +11,22 @@ class WMataAPI
     #@headers = { "Authorization" => "token #{Token}"}
   end
 
+  def update_metro_stations
+    s = WMataAPI.get("")
+    station_array = s["stations"]["station"].map {|station| station.values_at("name","lat","long","id")}
+    station_array.each do |station|
+      MetroStation.create! address: station[0], station_id: station[1], lat: station[2], long: station[3]
+    end
+  end
+
   def bus_stops
-    s = WMataAPI.get("https://api.wmata.com/Bus.svc/json/jStops", query: { api_key: "#{Token}" })
+    s = WMataAPI.get("/Bus.svc/json/jStops", query: { api_key: "#{Token}" })
+
   end
 
   def train_stations
-    s = WMataAPI.get("https://api.wmata.com/Rail.svc/json/jStations", query: { api_key: "#{Token}" })
-    # if s
-
-    #   station_array = s["stations"]["station"].map {|station| station.values_at("name","lat","long","nbEmptyDocks","nbBikes")}
-    #   station_array.map {|station| Hash[:name,station[0],:lat,station[1],:long,station[2],:nbEmptyDocks,station[3],:nbBikes,station[4]]}
-    # end
+    s = WMataAPI.get("/Rail.svc/json/jStations", query: { api_key: "#{Token}" })
+    station_array = s["Stations"].map {|s| s.values_at("Name","Code","Lat","Lon")}
   end
 end
 

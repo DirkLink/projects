@@ -1,6 +1,5 @@
 require 'httparty'
 require 'json'
-
 class BikeShareAPI
   # Token = File.read "./token"
 
@@ -9,6 +8,14 @@ class BikeShareAPI
 
   def initialize
     #@headers = { "Authorization" => "token #{Token}"}
+  end
+
+  def self.update_table
+    s = BikeShareAPI.get("")
+    station_array = s["stations"]["station"].map {|station| station.values_at("name","lat","long","id")}
+    station_array.each do |station|
+      BikeStation.create! address: station[0], station_id: station[1], lat: station[2], long: station[3]
+    end
   end
 
   def stations
@@ -21,8 +28,8 @@ class BikeShareAPI
   end
 end
 
-require 'pry'
-bikes = BikeShareAPI.new
-binding.pry
+# require 'pry'
+# bikes = BikeShareAPI.new
+# binding.pry
 # q["stations"]["station"].map {|station| station.values_at("name","lat","long")}
 # q = HTTParty.get("http://www.capitalbikeshare.com/data/stations/bikeStations.xml")
