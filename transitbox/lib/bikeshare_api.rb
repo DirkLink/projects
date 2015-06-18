@@ -1,0 +1,27 @@
+require 'httparty'
+require 'json'
+
+class BikeShareAPI
+  # Token = File.read "./token"
+
+  include HTTParty
+  base_uri 'https://www.capitalbikeshare.com/data/stations/bikeStations.xml'
+
+  def initialize
+    #@headers = { "Authorization" => "token #{Token}"}
+  end
+
+  def stations
+    s = BikeShareAPI.get("")
+    if s
+      station_array = s["stations"]["station"].map {|station| station.values_at("name","lat","long","nbEmptyDocks","nbBikes")}
+      station_array.map {|station| Hash[:name,station[0],:lat,station[1],:long,station[2],:nbEmptyDocks,station[3],:nbBikes,station[4]]}
+    end
+  end
+end
+
+require 'pry'
+bikes = BikeShareAPI.new
+binding.pry
+# q["stations"]["station"].map {|station| station.values_at("name","lat","long")}
+# q = HTTParty.get("http://www.capitalbikeshare.com/data/stations/bikeStations.xml")

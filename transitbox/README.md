@@ -27,13 +27,30 @@ You may need to fiddle around with remotes assuming that you don't want to push 
     └── all.rb          # Require this file to auto-require _all_ `.rb` files in `lib`
 ```
 
-View list of all suggested songs
+station{
+name:
+adress:
+distance:
+    train{
+        Line:
+        destination:
+        Min:
+     }
+}
 
-playlist style
-spotify view 
-get ./playlist_song
-User will be able to go to playlist and see all the songs that are currently suggested
-Have the playlist on the homepage, like Tom said "showcase the content without forcing the user to sign in"
 
-You cannot suggest any new songs until you sign in and are invited to suggest songs.
+bikes{
+    name:
+    nbBikes:
+    nbEmptyDocks:
+    distnace:
+}
+
+bus{
+    stopName;
+    Minutes:
+    RouteID:
+    directionText:
+    distance:
+}
 
