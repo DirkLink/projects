@@ -66,17 +66,6 @@ class WMataAPI
     s = WMataAPI.get("/Bus.svc/json/jStops", query: { api_key: "#{Token}" })
 
   end
-
-  # def train_stations
-  #   trains = Hash.new
-  #   stations = distance_list
-  #   stations.each do |s|
-  #     code = s[0]
-  #     station = MetroStation.find_by_code(code)
-  #     trains.merge!(Hash[:address, station.address,)
-  #   end
-  #   trains.to_json
-  # end
 end
 
 # require 'pry'

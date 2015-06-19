@@ -16,8 +16,10 @@ class TransitApp < Sinatra::Base
     loc  = [params[:latitude].to_f,params[:longitude].to_f]
     # loc = [38.9059620,-77.0423670]
     w = WMataAPI.new loc
-    # station_info = w.train_stations
-    nearest = w.nearest_stations
+    b = BikeShareAPI.new loc
+    nearest_metro = w.nearest_stations
+    # nearest_bus = w.nearest_bus
+    nearest_bike = b.nearest_stations
 
 
   end

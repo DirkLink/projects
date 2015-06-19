@@ -12,7 +12,7 @@ class BikeShareAPI
   end
 
   def self.update_table
-    s = BikeSharePI.get("")
+    s = BikeShareAPI.get("")
     station_array = s["stations"]["station"].map {|station| station.values_at("name","lat","long","id")}
     station_array.each do |station|
     BikeStation.create! address: station[0], station_id: station[1], lat: station[2], long: station[3]
@@ -22,7 +22,6 @@ class BikeShareAPI
   def distance_list
       station_array = []
       stations = BikeStation.all
-      info = station_info
       stations.each do |s|
         station_array.push([s.station_id,s.address,s.distance(@loc)])
       end
@@ -31,30 +30,31 @@ class BikeShareAPI
     end
 
     def nearest_stations
-      bikes = Hash.new
+      bikes = []
       stations = distance_list
       stations.each do |s|
-        id = s[0]
-        distance = s[2]
-        station = BikeStation.find_by_station_id(id)
-        bikes.merge!(Hash[station.station_id.to_s,Hash[:address,station.address,:distance, distance, :bikes, trains_at_station(code)]])
-      end
+      id = s[0]
+      distance = s[2]
+      station = BikeStation.find_by_station_id(id)
+      bikes = bikes.push(Hash[:bikes, station_info])
+    end
+      # trains = Hash[:station, trains]
+      bikes = Hash[:station,bikes]
       bikes.to_json
     end
-
 
     def bikes_at_station code
       # station = MetroStation.find_by_code(code)
       s = WMataAPI.get("https://api.wmata.com/StationPrediction.svc/json/GetPrediction/#{code}", query: { api_key: "#{Token}" })
       bikes = s["Trains"].map {|s| s.values_at("Line","Min","LocationName","DestinationName")}
-      trains = trains.map {|train| Hash[:train,Hash[:Line,train[0],:Min,train[1],:destination,train[3]]]}
+      trains = trains.map {|train| Hash[:Line,train[0],:Min,train[1],:destination,train[3]]}
     end
 
   def station_info
     s = BikeShareAPI.get("")
     if s
       station_array = s["stations"]["station"].map {|station| station.values_at("name","lat","long","nbEmptyDocks","nbBikes")}
-      station_array = station_array.map {|station| Hash[:name,station[0],:lat,station[1],:long,station[2],:nbEmptyDocks,station[3],:nbBikes,station[4]]}
+      station_array = station_array.map {|station| Hash[:name,station[0],:nbBikes,station[4],:nbEmptyDocks,station[3]]}
     end
     station_array
   end
