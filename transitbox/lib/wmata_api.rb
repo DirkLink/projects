@@ -34,7 +34,7 @@ class WMataAPI
     end
     # trains = Hash[:station, trains]
     trains = Hash[:station,trains]
-    trains.to_json
+    trains
   end
 
 
@@ -66,10 +66,48 @@ class WMataAPI
     s = WMataAPI.get("/Bus.svc/json/jStops", query: { api_key: "#{Token}" })
 
   end
+
+   def distance_list_bus
+    station_array = []
+    stations = BusStation.all
+    stations.each do |s|
+      station_array.push([s.stop_id,s.address,s.distance(@loc)])
+    end
+    station_array.compact!
+    station_array.sort_by! {|a| a[2]}
+    station_array[0..2]
+  end
+
+  def nearest_stops
+    buses = []
+    buses = distance_list_bus
+    buses.each do |s|
+      code = s[0].to_i
+      distance = s[2]
+      stop = BusStation.find_by_stop_id(code)
+      # binding.pry
+      if buses_at_stop(code)
+        buses = buses.push(Hash[:address, stop.address, :distance, distance, :bus, buses_at_stop(code)])
+      end
+    end
+    buses
+  end
+
+  def buses_at_stop code
+    s = WMataAPI.get("https://api.wmata.com/NextBusService.svc/json/jPredictions", query: { StopID: "#{code}", api_key: "#{Token}" })
+      if s["Predictions"]
+        buses = s["Predictions"].map {|h| h.values_at("Minutes","RouteID","DirectionText")}
+        buses = buses.map {|bus| Hash[:Minutes,bus[0],:RouteID,bus[1],:directionText,bus[2]]}
+        buses
+      end
+  # rescue => e
+  #   binding.pry
+  end
+
 end
 
 # require 'pry'
-# t = WMataAPI.new
+# t = WMataAPI.new [0,0]
 # binding.pry
 
 

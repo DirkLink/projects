@@ -13,13 +13,15 @@ class TransitApp < Sinatra::Base
   # set :session_secret, (ENV["SESSION_SECRET"] || "development")
 
   get "/transit" do
-    loc  = [params[:latitude].to_f,params[:longitude].to_f]
-    # loc = [38.9059620,-77.0423670]
+    # loc  = [params[:latitude].to_f,params[:longitude].to_f]
+    loc = [38.9059620,-77.0423670]
     w = WMataAPI.new loc
     b = BikeShareAPI.new loc
     nearest_metro = w.nearest_stations
-    # nearest_bus = w.nearest_bus
+    nearest_bus = w.nearest_stops
     nearest_bike = b.nearest_stations
+    a = [nearest_metro, nearest_bike, nearest_bus]
+    return a.to_json
 
 
   end
