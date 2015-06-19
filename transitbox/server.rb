@@ -13,7 +13,10 @@ class TransitApp < Sinatra::Base
   # set :session_secret, (ENV["SESSION_SECRET"] || "development")
 
   get "/transit" do
-    params[:loc]
+    params[:loc] = [38.9059620,-77.0423670]
+    w = WMataAPI.new params[:loc]
+    nearest = w.nearest_stations
+    # binding.pry
   end
 
   use Rack::Cors do

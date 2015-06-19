@@ -11,7 +11,7 @@ class BikeShareAPI
   end
 
   def self.update_table
-    s = BikeShareAPI.get("")
+    s = BikeSharePI.get("")
     station_array = s["stations"]["station"].map {|station| station.values_at("name","lat","long","id")}
     station_array.each do |station|
     BikeStation.create! address: station[0], station_id: station[1], lat: station[2], long: station[3]
