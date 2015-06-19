@@ -13,8 +13,9 @@ class TransitApp < Sinatra::Base
   # set :session_secret, (ENV["SESSION_SECRET"] || "development")
 
   get "/transit" do
-    params[:loc] = [38.9059620,-77.0423670]
-    w = WMataAPI.new params[:loc]
+    loc  = [params[:latitude].to_f,params[:longitude].to_f]
+    # loc = [38.9059620,-77.0423670]
+    w = WMataAPI.new loc
     # station_info = w.train_stations
     nearest = w.nearest_stations
 
@@ -26,6 +27,10 @@ class TransitApp < Sinatra::Base
       origins '*'
       resource '*', headers: :any, methods: :get
     end
+  end
+
+  before do
+    headers["Content-Type"] = "application/json"
   end
 
   after do
