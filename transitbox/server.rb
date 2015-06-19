@@ -15,8 +15,10 @@ class TransitApp < Sinatra::Base
   get "/transit" do
     params[:loc] = [38.9059620,-77.0423670]
     w = WMataAPI.new params[:loc]
+    # station_info = w.train_stations
     nearest = w.nearest_stations
-    # binding.pry
+
+
   end
 
   use Rack::Cors do

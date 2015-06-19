@@ -24,20 +24,23 @@ class WMataAPI
   end
 
   def nearest_stations
-    trains = {}
+    trains = Hash.new
     stations = distance_list
     stations.each do |s|
-      trains[s[0]] = trains_at_station s[0]
+      code = s[0]
+      distance = s[2]
+      station = MetroStation.find_by_code(code)
+      trains.merge!(Hash[station.code.to_s,Hash[:address,station.address,:name, station.name,:distance, distance, :trains, trains_at_station(code)]])
     end
     trains.to_json
   end
 
 
   def trains_at_station code
-    station = MetroStation.find_by_code(code)
+    # station = MetroStation.find_by_code(code)
     s = WMataAPI.get("https://api.wmata.com/StationPrediction.svc/json/GetPrediction/#{code}", query: { api_key: "#{Token}" })
     trains = s["Trains"].map {|s| s.values_at("Line","Min","LocationName","DestinationName")}
-    trains = trains.map {|train| Hash[:name,station.name,:train,Hash[:Line,train[0],:Min,train[1],:destination,train[3]]]}
+    trains = trains.map {|train| Hash[:train,Hash[:Line,train[0],:Min,train[1],:destination,train[3]]]}
   end
 
   def self.update_metro_stations
@@ -62,9 +65,16 @@ class WMataAPI
 
   end
 
-  def train_stations
-    s = WMataAPI.get("/Rail.svc/json/jStations", query: { api_key: "#{Token}" })
-  end
+  # def train_stations
+  #   trains = Hash.new
+  #   stations = distance_list
+  #   stations.each do |s|
+  #     code = s[0]
+  #     station = MetroStation.find_by_code(code)
+  #     trains.merge!(Hash[:address, station.address,)
+  #   end
+  #   trains.to_json
+  # end
 end
 
 # require 'pry'
