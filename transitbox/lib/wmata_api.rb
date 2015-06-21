@@ -73,23 +73,24 @@ class WMataAPI
     stations.each do |s|
       station_array.push([s.stop_id,s.address,s.distance(@loc)])
     end
-    station_array.compact!
+    # station_array.compact!
     station_array.sort_by! {|a| a[2]}
     station_array[0..2]
   end
 
   def nearest_stops
     buses = []
-    buses = distance_list_bus
-    buses.each do |s|
-      code = s[0].to_i
-      distance = s[2]
-      stop = BusStation.find_by_stop_id(code)
-      # binding.pry
-      if buses_at_stop(code)
-        buses = buses.push(Hash[:address, stop.address, :distance, distance, :bus, buses_at_stop(code)])
+      buses_list = distance_list_bus
+      buses_list.each do |s|
+        code = s[0].to_i
+        if buses_at_stop(code)
+          distance = s[2]
+          stop = BusStation.find_by_stop_id(code)
+          # binding.pry
+            buses = buses.push(Hash[:address, stop.address, :distance, distance, :bus, buses_at_stop(code)])
+        end
       end
-    end
+    buses = Hash[:buses,buses]
     buses
   end
 

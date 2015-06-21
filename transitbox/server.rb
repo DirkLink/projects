@@ -20,6 +20,7 @@ class TransitApp < Sinatra::Base
     nearest_metro = w.nearest_stations
     nearest_bus = w.nearest_stops
     nearest_bike = b.nearest_stations
+    # a = nearest_metro.concat(nearest_bike.concat(nearest_bus))
     a = [nearest_metro, nearest_bike, nearest_bus]
     return a.to_json
 

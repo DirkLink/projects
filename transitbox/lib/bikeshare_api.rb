@@ -36,8 +36,9 @@ class BikeShareAPI
         id = s[0]
         distance = s[2]
         station = BikeStation.find_by_station_id(id)
-        bikes = bikes.push(Hash[:bikes, station_info(id).push(Hash[:distance, distance])])
+        bikes = bikes.push(station_info(id).push(Hash[:distance, distance]))
       end
+      bikes = Hash[:bike,bikes]
       bikes
     end
 
