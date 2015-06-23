@@ -1,0 +1,11 @@
+<h1>Create a new item</h1>
+
+<% if @question.errors.any? %>
+  <p><strong>Error!</strong> <%= @question.errors.full_messages.to_sentence %></p>
+<% end %>
+
+<%= bootstrap_form_for @question do |f| %>
+  <%= f.text_field :title %>
+  <%= f.text_area :description %>
+  <button>Save</button>
+<% end %>
