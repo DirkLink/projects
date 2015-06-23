@@ -3,10 +3,9 @@
 <br>
 <br>
 
-<h2>Answers<h2>
 <br>
 <%= bootstrap_form_for @answer do |f| %>
-  <%= f.text_area :description %>
+  <%= f.text_area :description, label: "Submit an Answer" %>
   <%= f.hidden_field :question_id %>
   <button>Submit</button>
 <% end %>

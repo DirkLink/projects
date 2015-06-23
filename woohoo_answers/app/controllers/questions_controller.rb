@@ -1,6 +1,7 @@
 class QuestionsController < ApplicationController
   def index
     @questions = Question.all
+    @question = Question.new
   end
 
   def show
@@ -24,7 +25,7 @@ class QuestionsController < ApplicationController
       redirect_to question_path(@question), notice: "Question created"
     else
       # redisplay form with errors
-      render :new
+      render :index
     end
   end
 end

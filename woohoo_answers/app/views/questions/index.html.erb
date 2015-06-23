@@ -1,6 +1,18 @@
 <p>This is the index page</p>
 
-<%= button_to "Ask a question", new_question_path, method: :get %>
+<!-- <%= button_to "Ask a question", new_question_path, method: :get %> -->
+<h1>Create a new Question</h1>
+
+<% if @question.errors.any? %>
+  <p><strong>Error!</strong> <%= @question.errors.full_messages.to_sentence %></p>
+<% end %>
+
+<%= bootstrap_form_for @question do |f| %>
+  <%= f.text_field :title %>
+  <%= f.text_area :description %>
+  <button>Save</button>
+<% end %>
+<br>
 <ul>
   <% @questions.each do |question| %>
     <li>
