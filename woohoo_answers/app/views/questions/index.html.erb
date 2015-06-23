@@ -1,5 +1,6 @@
 <p>This is the index page</p>
 
+<%= button_to "Ask a question", new_question_path, method: :get %>
 <ul>
   <% @questions.each do |question| %>
     <li>
