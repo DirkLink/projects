@@ -1,2 +1,16 @@
 <h1><%= @question.title %></h1>
 <p><%= @question.description %></p>
+<br>
+<br>
+
+<h2>Answers<h2>
+<br>
+<%= bootstrap_form_for @answer do |f| %>
+  <%= f.text_area :description %>
+  <%= f.hidden_field :question_id %>
+  <button>Submit</button>
+<% end %>
+<br>
+<% @answers.each do |answer| %>
+  <%= answer.description %><br>
+<% end %>
