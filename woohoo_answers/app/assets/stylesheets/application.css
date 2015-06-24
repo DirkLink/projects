@@ -14,6 +14,10 @@
  *= require_self
  */
 
+.main {
+  background-color: #E9E9E9;
+}
+
 .header1 {
   color: white;
   font-size: 35px;
@@ -29,7 +33,7 @@
 }
 
 .btn {
-  background: #99CCFF;
+  background: white;
   box-shadow: 1px 1px 1px black;
 }
 .answer-list {
