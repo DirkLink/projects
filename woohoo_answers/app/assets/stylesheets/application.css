@@ -14,13 +14,41 @@
  *= require_self
  */
 
+.header1 {
+  color: white;
+  font-size: 35px;
+  text-shadow: 1px 1px 3px black;
+  -webkit-animation: blink 0.5s linear infinite;
+  -moz-animation: blink 0.5s linear infinite;
+  animation: blink 0.5s linear infinite;
+}
+.header2 {
+  color: white;
+  font-size: 35px;
+  text-shadow: 1px 1px 3px black;
+}
+
 .btn {
   background: #99CCFF;
+  box-shadow: 1px 1px 1px black;
 }
 .answer-list {
-  font-size:30px;
+  font-size:25px;
 }
 .answer-description {
   font-size:15px;
   list-style: disc;
+}
+
+@keyframes blink {  
+    0% { color: red; }
+    33% { color: blue; }
+    66% { color: green; }
+    100% { color: yellow; }
+}
+@-webkit-keyframes blink {
+    0% { color: red; }
+    33% { color: blue; }
+    66% { color: green; }
+    100% { color: yellow; }
 }

@@ -47,9 +47,6 @@
         </button>
         <a class="navbar-brand" href="/">WoohooAnswers</a>
         <div class="navbar-collapse collapse navbar-responsive-collapse">
-          <ul class="nav navbar-nav">
-            <li><%= link_to "Back to Question List", "/"  %></li>
-          </ul>
             <ul class="nav navbar-nav pull-right">
               <% if current_user %>
               <li><a><%= current_user.email %></a></li>
@@ -68,15 +65,6 @@
           <%= bootstrap_flash %>
           <%= yield %>
         </div>
-        <div class="col-lg-3">
-          <div class="well sidebar-nav">
-            <h3>Sidebar</h3>
-            <ul class="nav nav-list">
-              <li class="nav-header">Sidebar</li>
-              <li><%= link_to "Home", "/"  %></li>
-            </ul>
-          </div><!--/.well -->
-        </div><!--/span-->
       </div><!--/row-->
 
       <footer>

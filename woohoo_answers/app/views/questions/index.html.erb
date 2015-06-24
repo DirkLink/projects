@@ -1,15 +1,4 @@
-<h1>Create a new Question</h1>
-
-<% if @question.errors.any? %>
-  <p><strong>Error!</strong> <%= @question.errors.full_messages.to_sentence %></p>
-<% end %>
-
-<%= bootstrap_form_for @question do |f| %>
-  <%= f.text_field :title %>
-  <%= f.text_area :description %>
-  <button class="btn">Save</button>
-<% end %>
-<br>
+<p class="header2">Questions</p>
 <ul class="answer-list">
   <% @questions.each do |question| %>
     <li>
@@ -22,3 +11,17 @@
     </li>
   <% end %>
 </ul>
+
+<br>
+
+<p class="header2">Create a new Question<p>
+
+<% if @question.errors.any? %>
+  <p><strong>Error!</strong> <%= @question.errors.full_messages.to_sentence %></p>
+<% end %>
+
+<%= bootstrap_form_for @question do |f| %>
+  <%= f.text_field :title %>
+  <%= f.text_area :description %>
+  <button class="btn">Save</button>
+<% end %>
