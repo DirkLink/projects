@@ -1,7 +1,7 @@
 class AnswersController < ApplicationController
   def create
     answer_params = params[:answer]
-    @answer = Answer.new(
+    @answer = current_user.answers.new(
       question_id: answer_params[:question_id],
       description: answer_params[:description]
     )

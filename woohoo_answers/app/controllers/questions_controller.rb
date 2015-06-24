@@ -16,7 +16,7 @@ class QuestionsController < ApplicationController
 
   def create
     question_params = params[:question]
-    @question = Question.new(
+    @question = current_user.questions.new(
       title: question_params[:title],
       description: question_params[:description]
     )
