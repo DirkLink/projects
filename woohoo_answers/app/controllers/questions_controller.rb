@@ -1,6 +1,6 @@
 class QuestionsController < ApplicationController
 # skip_before_action :authenticate_user!, only: [:index]
-  
+
   def index
     @questions = Question.all
     @question = Question.new
@@ -9,7 +9,7 @@ class QuestionsController < ApplicationController
   def show
     @question = Question.find params[:id]
     @answers = @question.answers
-    @answer = @question.answers.new
+    @new_answer = @question.answers.new
   end
 
   def new
