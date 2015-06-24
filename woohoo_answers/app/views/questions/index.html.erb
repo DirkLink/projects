@@ -1,6 +1,3 @@
-<p>This is the index page</p>
-
-<!-- <%= button_to "Ask a question", new_question_path, method: :get %> -->
 <h1>Create a new Question</h1>
 
 <% if @question.errors.any? %>
@@ -13,10 +10,15 @@
   <button class="btn">Save</button>
 <% end %>
 <br>
-<ul>
+<ul class="answer-list">
   <% @questions.each do |question| %>
     <li>
       <%= link_to question.title, question %>
+      <% if question.description %>
+        <ul class="answer-description">
+          <li><%= question.description %></li>
+        </ul>
+      <% end %>
     </li>
   <% end %>
 </ul>

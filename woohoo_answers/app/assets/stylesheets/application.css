@@ -13,3 +13,14 @@
  *= require_tree .
  *= require_self
  */
+
+.btn {
+  background: #99CCFF;
+}
+.answer-list {
+  font-size:30px;
+}
+.answer-description {
+  font-size:15px;
+  list-style: disc;
+}
