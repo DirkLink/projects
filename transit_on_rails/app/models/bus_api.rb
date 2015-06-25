@@ -47,7 +47,7 @@ class BusApi
 
   def self.update_bus_stations
     BusStation.delete_all
-    s = BusStation.get("/Bus.svc/json/jStops", query: { api_key: "#{Token}" })
+    s = BusApi.get("/Bus.svc/json/jStops", query: { api_key: "#{Token}" })
     station_array = s["Stops"].map {|s| s.values_at("Name","StopID","Lat","Lon")}
     station_array.each do |station|
       BusStation.create! address: station[0], stop_id: station[1], lat: station[2],  long: station[3]

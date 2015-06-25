@@ -33,20 +33,19 @@ class BikeApi
     bikes
   end
 
-  def station_info id
-    s = BikeShareAPI.get("")
+  def self.station_info id
+    s = BikeApi.get("")
     if s
-      station_array = s["stations"]["station"].map {|station| station.values_at("name","lat","long","nbEmptyDocks","nbBikes","id")}
-      station_array = station_array.select {|station| station[5].to_i==id}
-      station_array = station_array.map {|station| Bike.new(station)}
+      station_array = s["stations"]["station"].select {|station| station["id"].to_i==id}
+      station_array.map {|station| Bike.new(station)}
     end
-    station_array
   end
 
 
   def self.update_table
-    s = BikeStation.get("")
-    station_array = s["stations"]["station"].map {|station| station.values_at("name","lat","long","id")}
+    BikeStation.delete_all
+    s = BikeApi.get("")
+    station_array = s["stations"]["station"].map {|station| station.values_at("name","id","lat","long")}
     station_array.each do |station|
       BikeStation.create! address: station[0], station_id: station[1], lat: station[2], long: station[3]
     end
