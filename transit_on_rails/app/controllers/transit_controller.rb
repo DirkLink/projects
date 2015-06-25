@@ -7,7 +7,7 @@ class TransitController < ApplicationController
     # b = BikeApi.new loc
     # bs = BusApi.new loc
     @nearest_metro = TrainStation.nearest_stations @loc
-    # @nearest_bus = BusStation.nearest_stations loc
+    @nearest_bus = BusStation.nearest_stations @loc
     @nearest_bike = BikeStation.nearest_stations @loc
   end
 end

@@ -14,3 +14,12 @@ json.bike @nearest_bike do |bike|
   json.nbBikes bike.stations.nbBikes
   json.nbEmptyDocks bike.stations.nbEmptyDocks
 end
+
+json.buses @nearest_bus do |buses|
+  json.distance buses.distance(@loc)
+  json.address buses.address
+
+  json.bus buses.buses_at do |bus|
+      json.(bus, :Minutes, :directionText, :RouteID)
+  end
+end
